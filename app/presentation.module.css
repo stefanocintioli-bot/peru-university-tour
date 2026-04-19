@@ -76,23 +76,22 @@
 .geometric {
   position: absolute;
   pointer-events: none;
-  filter: blur(70px);
-  border-radius: 50%;
+  filter: blur(40px);
 }
 
 .hexagon {
   position: absolute;
   pointer-events: none;
-  filter: blur(60px);
-  border-radius: 50%;
+  filter: blur(25px);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
 .node {
   position: absolute;
   pointer-events: none;
   border-radius: 50%;
-  filter: blur(80px);
-  box-shadow: 0 0 80px currentColor;
+  filter: blur(20px);
+  box-shadow: 0 0 60px currentColor;
 }
 
 /* Grid layouts */

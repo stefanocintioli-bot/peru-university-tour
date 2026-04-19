@@ -12,6 +12,13 @@ const PHOTO_UTOUR = 'https://raw.githubusercontent.com/stefanocintioli-bot/bnb-c
 
 const TOTAL_SLIDES = 14;
 
+// Salary count-up for slide 2 (index 1)
+const SALARY_STATS = [
+  { target: 121, prefix: '~$', suffix: 'K' },
+  { target: 165, prefix: '$140K–$', suffix: 'K' },
+  { target: 187, prefix: '$', suffix: 'K+' },
+];
+
 // Count-up stats for slide 4 (index 3)
 const STATS = [
   { target: 0.45, decimals: 2, format: (v: number) => `~${v.toFixed(2)}s` },
@@ -24,48 +31,54 @@ const STATS = [
 
 const easeOutQuart = (x: number) => 1 - Math.pow(1 - x, 4);
 
-// Geometric background component — sphere-like shapes + grid
+// Geometric background — exact transplant from bnbchain-latam-intro, gold updated to #FFE900
 const GeometricBg = ({ intensity = 'normal' }: { intensity?: 'high' | 'normal' | 'low' }) => {
-  const low = [
-    { size: 180, left: 85, top: 8,  opacity: 0.07 },
-    { size: 140, left: 5,  top: 55, opacity: 0.06 },
-    { size: 120, left: 50, top: 75, opacity: 0.05 },
+  const normalShapes = [
+    { size: 200, left: 5,  top: 10, type: 'hex',  color: 'rgba(255,233,0,0.10)' },
+    { size: 120, left: 80, top: 5,  type: 'node', color: 'rgba(255,233,0,0.13)' },
+    { size: 280, left: 75, top: 55, type: 'hex',  color: 'rgba(255,255,255,0.05)' },
+    { size: 100, left: 2,  top: 70, type: 'node', color: 'rgba(255,233,0,0.08)' },
+    { size: 160, left: 45, top: 80, type: 'blob', color: 'rgba(255,255,255,0.04)' },
   ];
-  const normal = [
-    { size: 220, left: 70, top: -5, opacity: 0.09 },
-    { size: 180, left: 5,  top: 20, opacity: 0.07 },
-    { size: 280, left: 75, top: 55, opacity: 0.06 },
-    { size: 120, left: 2,  top: 70, opacity: 0.08 },
-    { size: 160, left: 45, top: 80, opacity: 0.05 },
+  const lowShapes = [
+    { size: 180, left: 85, top: 8,  type: 'hex',  color: 'rgba(255,233,0,0.07)' },
+    { size: 140, left: 5,  top: 55, type: 'node', color: 'rgba(255,255,255,0.05)' },
+    { size: 120, left: 50, top: 75, type: 'blob', color: 'rgba(255,233,0,0.05)' },
   ];
-  const high = [
-    { size: 350, left: 65,  top: -10, opacity: 0.12 },
-    { size: 260, left: -5,  top: 40,  opacity: 0.10 },
-    { size: 200, left: 80,  top: 60,  opacity: 0.12 },
-    { size: 150, left: 20,  top: 75,  opacity: 0.09 },
-    { size: 300, left: 50,  top: 5,   opacity: 0.08 },
-    { size: 180, left: 10,  top: 10,  opacity: 0.10 },
-    { size: 260, left: 70,  top: 80,  opacity: 0.09 },
+  const highShapes = [
+    { size: 350, left: 65, top: -10, type: 'hex',  color: 'rgba(255,233,0,0.15)' },
+    { size: 250, left: -5, top: 40,  type: 'hex',  color: 'rgba(255,233,0,0.12)' },
+    { size: 180, left: 80, top: 60,  type: 'node', color: 'rgba(255,233,0,0.18)' },
+    { size: 140, left: 20, top: 75,  type: 'node', color: 'rgba(255,255,255,0.10)' },
+    { size: 300, left: 50, top: 5,   type: 'blob', color: 'rgba(255,255,255,0.06)' },
+    { size: 200, left: 10, top: 10,  type: 'node', color: 'rgba(255,233,0,0.13)' },
+    { size: 280, left: 70, top: 80,  type: 'hex',  color: 'rgba(255,233,0,0.10)' },
+    { size: 160, left: 35, top: 50,  type: 'blob', color: 'rgba(255,255,255,0.05)' },
   ];
-  const shapes = intensity === 'high' ? high : intensity === 'low' ? low : normal;
-
+  const dataset = intensity === 'high' ? highShapes : intensity === 'low' ? lowShapes : normalShapes;
   return (
     <>
-      <div className={styles.gridOverlay} />
-      {shapes.map((s, i) => (
-        <div
-          key={i}
-          className={styles.node}
-          style={{
-            width: s.size,
-            height: s.size,
-            left: `${s.left}%`,
-            top: `${s.top}%`,
-            backgroundColor: `rgba(255,255,255,${s.opacity})`,
-            color: `rgba(255,255,255,${s.opacity})`,
-          }}
-        />
-      ))}
+      {dataset.map((data, i) => {
+        const className = data.type === 'hex'
+          ? styles.hexagon
+          : data.type === 'node'
+            ? styles.node
+            : styles.geometric;
+        return (
+          <div
+            key={i}
+            className={className}
+            style={{
+              width: `${data.size}px`,
+              height: `${data.size}px`,
+              left: `${data.left}%`,
+              top: `${data.top}%`,
+              backgroundColor: data.color,
+              color: data.type === 'node' ? data.color : undefined,
+            }}
+          />
+        );
+      })}
     </>
   );
 };
@@ -108,7 +121,11 @@ export default function BNBPresentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStartX, setTouchStartX] = useState(0);
   const [countValues, setCountValues] = useState(STATS.map(() => 0));
+  const [salaryValues, setSalaryValues] = useState([0, 0, 0]);
+  const [demandValues, setDemandValues] = useState([0, 0]);
   const rafRef = useRef<number | null>(null);
+  const salaryRafRef = useRef<number | null>(null);
+  const demandRafRef = useRef<number | null>(null);
 
   const goNext = useCallback(() => setCurrentSlide((p) => (p + 1) % TOTAL_SLIDES), []);
   const goPrev = useCallback(() => setCurrentSlide((p) => (p - 1 + TOTAL_SLIDES) % TOTAL_SLIDES), []);
@@ -144,10 +161,50 @@ export default function BNBPresentation() {
     rafRef.current = requestAnimationFrame(tick);
   }, []);
 
+  const runSalaryCountUp = useCallback(() => {
+    if (salaryRafRef.current !== null) cancelAnimationFrame(salaryRafRef.current);
+    setSalaryValues([0, 0, 0]);
+    const duration = 1000;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = easeOutQuart(progress);
+      setSalaryValues(SALARY_STATS.map((s) => s.target * eased));
+      if (progress < 1) { salaryRafRef.current = requestAnimationFrame(tick); }
+      else { setSalaryValues(SALARY_STATS.map((s) => s.target)); salaryRafRef.current = null; }
+    };
+    salaryRafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  const runDemandCountUp = useCallback(() => {
+    if (demandRafRef.current !== null) cancelAnimationFrame(demandRafRef.current);
+    setDemandValues([0, 0]);
+    const duration = 1000;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = easeOutQuart(progress);
+      setDemandValues([45 * eased, 220 * eased]);
+      if (progress < 1) { demandRafRef.current = requestAnimationFrame(tick); }
+      else { setDemandValues([45, 220]); demandRafRef.current = null; }
+    };
+    demandRafRef.current = requestAnimationFrame(tick);
+  }, []);
+
   useEffect(() => {
     if (currentSlide === 3) runCountUp();
     return () => { if (rafRef.current !== null) cancelAnimationFrame(rafRef.current); };
   }, [currentSlide, runCountUp]);
+
+  useEffect(() => {
+    if (currentSlide === 1) runSalaryCountUp();
+    return () => { if (salaryRafRef.current !== null) cancelAnimationFrame(salaryRafRef.current); };
+  }, [currentSlide, runSalaryCountUp]);
+
+  useEffect(() => {
+    if (currentSlide === 4) runDemandCountUp();
+    return () => { if (demandRafRef.current !== null) cancelAnimationFrame(demandRafRef.current); };
+  }, [currentSlide, runDemandCountUp]);
 
   const progress = ((currentSlide + 1) / TOTAL_SLIDES) * 100;
   const slideNum = String(currentSlide + 1).padStart(2, '0');
@@ -169,14 +226,16 @@ export default function BNBPresentation() {
       <GeometricBg intensity="high" />
       <div className={styles.slideContent} style={{ position: 'relative' }}>
         {/* Hero symbol */}
-        <div style={{ textAlign: 'center', width: '100%' }}>
-          <img src={LOGO_YELLOW} alt="BNB Chain" height={72}
-            style={{ display: 'block', margin: '0 auto', width: 'auto' }}
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+        <div style={{ textAlign: 'center', width: '100%', marginBottom: '24px' }}>
+          <div style={{ animation: 'symbolFloat 4s ease-in-out infinite', display: 'inline-block' }}>
+            <img src={LOGO_YELLOW} alt="BNB Chain"
+              style={{ height: '96px', width: 'auto', display: 'block', animation: 'symbolGlow 3s ease-in-out infinite' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          </div>
         </div>
 
         {/* Partner row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 16, width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: '28px', width: '100%' }}>
           <span style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 12, color: '#fff', letterSpacing: '0.15em' }}>BNB CHAIN</span>
           <span style={{ color: '#444', fontSize: 12 }}> × </span>
           <span style={{ fontFamily: 'var(--font)', fontWeight: 500, fontSize: 12, color: '#fff' }}>Binance</span>
@@ -189,7 +248,7 @@ export default function BNBPresentation() {
           fontFamily: 'var(--font)', fontWeight: 700,
           fontSize: 'clamp(1.8rem,4.5vw,3.8rem)',
           color: '#FFE900', textAlign: 'center',
-          marginTop: 32, width: '100%', lineHeight: 1.2,
+          marginTop: '20px', marginBottom: '12px', width: '100%', lineHeight: 1.2,
         }}>
           Blockchain: Tu Próxima Carrera Global
         </h1>
@@ -199,7 +258,7 @@ export default function BNBPresentation() {
           fontFamily: 'var(--font)', fontWeight: 400,
           fontSize: '0.9rem', color: '#888888',
           letterSpacing: '0.1em', textAlign: 'center',
-          marginTop: 10, width: '100%',
+          marginTop: '12px', width: '100%',
         }}>
           Peru University Tour · 2026
         </p>
@@ -230,13 +289,13 @@ export default function BNBPresentation() {
 
         <div className={styles.grid1x3} style={{ alignItems: 'stretch' }}>
           {[
-            { label: 'ENTRY-LEVEL', value: '~$121K', sub: 'Glassdoor, talent.com — 2026' },
-            { label: 'MID-LEVEL (2-4 años)', value: '$140K–$165K', sub: 'Remoto, en dólares' },
-            { label: 'SENIOR (5+ años)', value: '$187K+', sub: 'Alta demanda, poca oferta' },
+            { label: 'ENTRY-LEVEL', value: `~$${Math.round(salaryValues[0])}K`, sub: 'Glassdoor, talent.com — 2026' },
+            { label: 'MID-LEVEL (2-4 años)', value: `$140K–$${Math.round(salaryValues[1])}K`, sub: 'Remoto, en dólares' },
+            { label: 'SENIOR (5+ años)', value: `$${Math.round(salaryValues[2])}K+`, sub: 'Alta demanda, poca oferta' },
           ].map((s, i) => (
             <div key={i} className={styles.statCard} style={{ minHeight: '140px' }}>
               <p style={{ fontFamily: 'var(--font)', fontWeight: 600, fontSize: 10, color: '#888', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{s.label}</p>
-              <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', color: '#fff' }}>{s.value}</p>
+              <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', color: '#fff', fontVariantNumeric: 'tabular-nums' }}>{s.value}</p>
               <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: 11, color: '#FFE900', marginTop: 4 }}>{s.sub}</p>
             </div>
           ))}
@@ -332,7 +391,7 @@ export default function BNBPresentation() {
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px', width: '100%', padding: '20px 0' }}>
           <div style={{ textAlign: 'center', width: '100%' }}>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#FFE900' }}>45%</p>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#FFE900', fontVariantNumeric: 'tabular-nums' }}>{Math.round(demandValues[0])}%</p>
             <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.95rem', color: '#888', marginTop: 8 }}>
               crecimiento en demanda de developers blockchain en 2026
             </p>
@@ -341,7 +400,7 @@ export default function BNBPresentation() {
           <div style={{ border: '1px solid rgba(255,255,255,0.08)', width: '200px', margin: '8px auto' }} />
 
           <div style={{ textAlign: 'center', width: '100%' }}>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3.5vw,3rem)', color: '#fff' }}>$29B → $220B</p>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3.5vw,3rem)', color: '#fff', fontVariantNumeric: 'tabular-nums' }}>$29B → ${Math.round(demandValues[1])}B</p>
             <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#FFE900', marginTop: 6 }}>
               tamaño del mercado blockchain: 2024 → 2029
             </p>
@@ -367,32 +426,65 @@ export default function BNBPresentation() {
     <div className={styles.slide}>
       <GeometricBg intensity="normal" />
       <div className={styles.slideContent}>
-        <h2 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', color: '#fff', marginBottom: 16 }}>
+        <h2 style={{ fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', fontFamily: 'var(--font)', fontWeight: 700, marginBottom: '8px' }}>
           La próxima frontera: IA + Web3
         </h2>
 
-        <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px', maxWidth: '700px' }}>
-          Un agente de IA es un programa que toma decisiones y ejecuta
-          acciones por su cuenta — sin que nadie le diga qué hacer paso a paso.
-          En Web3, estos agentes pueden interactuar con contratos inteligentes,
-          mover fondos, y operar en la blockchain de forma autónoma.
+        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '24px', maxWidth: '680px' }}>
+          Un agente de IA es un programa que toma decisiones y ejecuta acciones
+          por su cuenta — sin que nadie le diga qué hacer paso a paso.
+          En Web3, estos agentes interactúan con contratos inteligentes,
+          mueven fondos y operan en la blockchain de forma autónoma.
         </p>
 
-        <GoldBar style={{ marginBottom: 20 }}>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.9rem', color: '#fff', lineHeight: 1.7 }}>
-            El 35% de la actividad actual en BNB Chain es generada por agentes autónomos de IA. Es la red #1 en agentes on-chain.
+        <div style={{
+          background: 'rgba(255,233,0,0.06)',
+          borderLeft: '4px solid #FFE900',
+          borderRadius: '0 10px 10px 0',
+          padding: '16px 24px',
+          marginBottom: '28px',
+          width: '100%',
+        }}>
+          <p style={{ fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 500 }}>
+            El 35% de la actividad actual en BNB Chain es generada por agentes
+            autónomos de IA.{' '}
+            <span style={{ color: '#FFE900', fontWeight: 700 }}>
+              Es la red #1 en agentes on-chain.
+            </span>
           </p>
-        </GoldBar>
+        </div>
 
-        <div className={styles.grid1x3}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '16px', width: '100%' }}>
           {[
-            { title: 'MCP + BNB Chain Skills', desc: 'Conectá cualquier LLM a contratos de BNB Chain en minutos.' },
-            { title: 'BNBAgent SDK (ERC-8183)', desc: 'Registrá agentes on-chain con identidad, trabajo y pago.' },
-            { title: 'Vibecoding', desc: 'Construir apps con IA sin escribir código. El nuevo skill del developer.' },
-          ].map((c, i) => (
-            <div key={i} className={styles.card}>
-              <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 8 }}>{c.title}</h3>
-              <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.8rem', color: '#888', lineHeight: 1.5 }}>{c.desc}</p>
+            {
+              emoji: '🔗',
+              title: 'MCP + BNB Chain Skills',
+              desc: 'Conectá cualquier LLM a contratos de BNB Chain en minutos. Sin configuración compleja.',
+            },
+            {
+              emoji: '🤖',
+              title: 'BNBAgent SDK (ERC-8183)',
+              desc: 'Registrá agentes on-chain con identidad propia, historial de trabajo y sistema de pago.',
+            },
+            {
+              emoji: '⚡',
+              title: 'Vibecoding',
+              desc: 'Construir apps con IA sin escribir código línea por línea. El nuevo skill del developer en 2026.',
+            },
+          ].map((item, i) => (
+            <div key={i} style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderTop: i === 1 ? '3px solid #FFE900' : '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '10px',
+              padding: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}>
+              <span style={{ fontSize: '2rem' }}>{item.emoji}</span>
+              <h3 style={{ fontSize: '0.95rem', fontFamily: 'var(--font)', fontWeight: 700, color: '#FFFFFF' }}>{item.title}</h3>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{item.desc}</p>
             </div>
           ))}
         </div>
