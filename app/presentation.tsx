@@ -10,7 +10,7 @@ const PHOTO_CRECIMIENTO = 'https://raw.githubusercontent.com/stefanocintioli-bot
 const PHOTO_VENDIMIA = 'https://raw.githubusercontent.com/stefanocintioli-bot/bnb-chain-v0/main/events/vendimia/Vendimia.jpg';
 const PHOTO_UTOUR = 'https://raw.githubusercontent.com/stefanocintioli-bot/bnb-chain-v0/main/events/university-tour/Univeersity%20Tour%20Groupal%20Photo.jpg';
 
-const TOTAL_SLIDES = 12;
+const TOTAL_SLIDES = 14;
 
 // Count-up stats for slide 4 (index 3)
 const STATS = [
@@ -73,7 +73,7 @@ const GeometricBg = ({ intensity = 'normal' }: { intensity?: 'high' | 'normal' |
 // Shared bottom-left logo
 const BottomLogo = () => (
   <div className={styles.logo}>
-    <img src={LOGO_WHITE} alt="BNB Chain" height={18} style={{ width: 'auto', display: 'block' }}
+    <img src={LOGO_WHITE} alt="BNB Chain" height={18} style={{ height: '18px', width: 'auto', display: 'block' }}
       onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
   </div>
 );
@@ -222,21 +222,21 @@ export default function BNBPresentation() {
           ¿Por qué esto te importa hoy?
         </h2>
 
-        <GoldBar>
+        <GoldBar style={{ marginBottom: '24px' }}>
           <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.9rem', color: '#fff', lineHeight: 1.7 }}>
             Un desarrollador junior en blockchain gana más que un senior en desarrollo web tradicional. Y la mayoría son 100% remotos.
           </p>
         </GoldBar>
 
-        <div className={styles.grid1x3} style={{ marginTop: 8 }}>
+        <div className={styles.grid1x3} style={{ alignItems: 'stretch' }}>
           {[
             { label: 'ENTRY-LEVEL', value: '~$121K', sub: 'Glassdoor, talent.com — 2026' },
             { label: 'MID-LEVEL (2-4 años)', value: '$140K–$165K', sub: 'Remoto, en dólares' },
             { label: 'SENIOR (5+ años)', value: '$187K+', sub: 'Alta demanda, poca oferta' },
           ].map((s, i) => (
-            <div key={i} className={styles.statCard}>
+            <div key={i} className={styles.statCard} style={{ minHeight: '140px' }}>
               <p style={{ fontFamily: 'var(--font)', fontWeight: 600, fontSize: 10, color: '#888', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>{s.label}</p>
-              <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.4rem,2.5vw,2rem)', color: '#fff' }}>{s.value}</p>
+              <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', color: '#fff' }}>{s.value}</p>
               <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: 11, color: '#FFE900', marginTop: 4 }}>{s.sub}</p>
             </div>
           ))}
@@ -260,7 +260,7 @@ export default function BNBPresentation() {
 
         <GoldPill>Para entenderlo fácil</GoldPill>
 
-        <div className={styles.card} style={{ width: '100%', marginTop: 12, marginBottom: 20 }}>
+        <div className={styles.card} style={{ width: '100%', marginTop: 12, marginBottom: 16, padding: '28px 32px' }}>
           <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.9rem', color: '#fff', lineHeight: 1.8 }}>
             Pensalo como una ciudad digital.<br />
             <strong style={{ color: '#FFE900' }}>BSC</strong> es la ciudad base — donde vive todo.<br />
@@ -269,13 +269,13 @@ export default function BNBPresentation() {
           </p>
         </div>
 
-        <div className={styles.grid1x3}>
+        <div className={styles.grid1x3} style={{ gap: '16px' }}>
           {[
             { icon: '🏙️', title: 'BSC', desc: 'Layer 1. EVM compatible. Hogar de DeFi, NFTs, Smart Contracts.' },
             { icon: '⚡', title: 'opBNB', desc: '+10,000 TPS. Menos de $0.0001 por transacción.' },
             { icon: '🗄️', title: 'Greenfield', desc: 'Almacenamiento descentralizado con permisos on-chain.' },
           ].map((c, i) => (
-            <div key={i} className={styles.card}>
+            <div key={i} className={styles.card} style={{ minHeight: '120px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>{c.icon}</div>
               <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#FFE900', marginBottom: 6 }}>{c.title}</h3>
               <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.8rem', color: '#888', lineHeight: 1.5 }}>{c.desc}</p>
@@ -330,21 +330,25 @@ export default function BNBPresentation() {
           La demanda supera la oferta.
         </h2>
 
-        <div style={{ textAlign: 'center', width: '100%', marginBottom: 16 }}>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#FFE900' }}>45%</p>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.95rem', color: '#888', marginTop: 8 }}>
-            crecimiento en demanda de developers blockchain en 2026
-          </p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px', width: '100%', padding: '20px 0' }}>
+          <div style={{ textAlign: 'center', width: '100%' }}>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(2.5rem,6vw,5rem)', color: '#FFE900' }}>45%</p>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.95rem', color: '#888', marginTop: 8 }}>
+              crecimiento en demanda de developers blockchain en 2026
+            </p>
+          </div>
+
+          <div style={{ border: '1px solid rgba(255,255,255,0.08)', width: '200px', margin: '8px auto' }} />
+
+          <div style={{ textAlign: 'center', width: '100%' }}>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3.5vw,3rem)', color: '#fff' }}>$29B → $220B</p>
+            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#FFE900', marginTop: 6 }}>
+              tamaño del mercado blockchain: 2024 → 2029
+            </p>
+          </div>
         </div>
 
-        <div style={{ textAlign: 'center', width: '100%', marginBottom: 24 }}>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3.5vw,3rem)', color: '#fff' }}>$29B → $220B</p>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#FFE900', marginTop: 6 }}>
-            tamaño del mercado blockchain: 2024 → 2029
-          </p>
-        </div>
-
-        <GoldBar style={{ width: '100%' }}>
+        <GoldBar style={{ width: '100%', marginTop: 8 }}>
           <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#fff', lineHeight: 1.7 }}>
             Hay más puestos de trabajo que personas calificadas.<br />
             Para ustedes, esta es una ventana de oportunidad real.
@@ -366,6 +370,13 @@ export default function BNBPresentation() {
         <h2 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', color: '#fff', marginBottom: 16 }}>
           La próxima frontera: IA + Web3
         </h2>
+
+        <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px', maxWidth: '700px' }}>
+          Un agente de IA es un programa que toma decisiones y ejecuta
+          acciones por su cuenta — sin que nadie le diga qué hacer paso a paso.
+          En Web3, estos agentes pueden interactuar con contratos inteligentes,
+          mover fondos, y operar en la blockchain de forma autónoma.
+        </p>
 
         <GoldBar style={{ marginBottom: 20 }}>
           <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.9rem', color: '#fff', lineHeight: 1.7 }}>
@@ -403,13 +414,13 @@ export default function BNBPresentation() {
 
         <div className={styles.grid2x2}>
           {/* Card 1 */}
-          <a href="https://bnb-learn.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.card} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <a href="https://bnb-dojo.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.card} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🎓</div>
             <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>BNB Dojo</h3>
             <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.8rem', color: '#888', lineHeight: 1.5, marginBottom: 8 }}>
               App gamificada de aprendizaje Web3. Tracks de estudio, ranking mensual, perfil público.
             </p>
-            <span style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: 11, color: '#FFE900' }}>→ bnb-learn.vercel.app</span>
+            <span style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: 11, color: '#FFE900' }}>→ bnb-dojo.vercel.app</span>
           </a>
 
           {/* Card 2 */}
@@ -441,14 +452,14 @@ export default function BNBPresentation() {
           </div>
 
           {/* Card 4 */}
-          <a href="https://bnbchain-latam-intro.vercel.app" target="_blank" rel="noopener noreferrer" className={styles.card} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.card}>
             <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🖥️</div>
             <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>Esta presentación</h3>
             <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.8rem', color: '#888', lineHeight: 1.5, marginBottom: 8 }}>
               Presentación web construida con v0 + Claude Code. Trilingual, deployada en Vercel.
             </p>
             <span style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: 11, color: '#FFE900' }}>→ bnbchain-latam-intro.vercel.app</span>
-          </a>
+          </div>
         </div>
       </div>
       {chrome}
@@ -465,19 +476,25 @@ export default function BNBPresentation() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
           {/* Card 1 */}
-          <div className={styles.card}>
-            <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>🐦 Creá tu cuenta en X</h3>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', lineHeight: 1.6 }}>
-              Compartí lo que estás construyendo. Un post por semana sobre tu progreso ya te pone adelante del 99% de los estudiantes.
-            </p>
+          <div className={styles.card} style={{ cursor: 'pointer' }}>
+            <a href="https://x.com/BNBChainLatAm" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>🐦 Creá tu cuenta en X</h3>
+              <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', lineHeight: 1.6 }}>
+                Compartí lo que estás construyendo. Un post por semana sobre tu progreso ya te pone adelante del 99% de los estudiantes.
+              </p>
+              <span style={{ fontSize: '11px', color: 'var(--gold)', marginTop: '10px', display: 'block' }}>→ @BNBChainLatAM</span>
+            </a>
           </div>
 
           {/* Card 2 */}
-          <div className={styles.card}>
-            <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>📱 Unite a comunidades Web3</h3>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', lineHeight: 1.6 }}>
-              Telegram, Discord, X. Donde están los builders están las oportunidades. Empezá con @BNBChainLatAM.
-            </p>
+          <div className={styles.card} style={{ cursor: 'pointer' }}>
+            <a href="https://t.me/BNBChainES" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: '0.95rem', color: '#fff', marginBottom: 6 }}>📱 Unite a comunidades Web3</h3>
+              <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', lineHeight: 1.6 }}>
+                Telegram, Discord, X. Donde están los builders están las oportunidades. Empezá con @BNBChainLatAM.
+              </p>
+              <span style={{ fontSize: '11px', color: 'var(--gold)', marginTop: '10px', display: 'block' }}>→ t.me/BNBChainES</span>
+            </a>
           </div>
 
           {/* Card 3 with REGLA #1 badge */}
@@ -551,43 +568,101 @@ export default function BNBPresentation() {
 
   const slide10 = (
     <div className={styles.slide}>
-      <GeometricBg intensity="low" />
+      <GeometricBg intensity="normal" />
       <div className={styles.slideContent}>
-        <h2 style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', color: '#fff', marginBottom: 24 }}>
-          Dos eventos que lo demuestran.
-        </h2>
-
-        <div className={styles.grid1x2} style={{ marginBottom: 24 }}>
-          {/* Left card */}
-          <div className={styles.card}>
-            <GoldPill>CRECIMIENTO POP UP</GoldPill>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3vw,2.4rem)', color: '#FFE900', marginTop: 8 }}>+20 founders</p>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', marginTop: 8, lineHeight: 1.6 }}>
-              Workshop técnico para founders. 5+ en conversaciones activas con BD.
+        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+          <div>
+            <span className={styles.goldPill}>CRECIMIENTO POP UP</span>
+            <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
+              Workshop técnico para founders en LatAm.
+            </h2>
+            <p style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font)', fontWeight: 800, color: 'var(--gold)', marginTop: '16px' }}>
+              +20 founders participaron.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+              5+ en conversaciones activas con nuestro equipo de BD.
             </p>
           </div>
-
-          {/* Right card */}
-          <div className={styles.card}>
-            <GoldPill>VENDIMIATECH HACKATHON</GoldPill>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 'clamp(1.6rem,3vw,2.4rem)', color: '#FFE900', marginTop: 8 }}>+10 proyectos. 3 ganadores.</p>
-            <p style={{ fontFamily: 'var(--font)', fontWeight: 400, fontSize: '0.85rem', color: '#888', marginTop: 8, lineHeight: 1.6 }}>
-              El 1er lugar en conversación con nuestro equipo de IA y Agentes.
-            </p>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+            <img
+              src={PHOTO_CRECIMIENTO}
+              alt="Crecimiento Workshop"
+              loading="lazy"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
           </div>
         </div>
-
-        <GoldBar style={{ width: '100%' }}>
-          <p style={{ fontFamily: 'var(--font)', fontWeight: 600, fontSize: '0.9rem', color: '#fff', textAlign: 'center' }}>
-            Mendoza y Buenos Aires ya son hubs Web3. Lima es la siguiente.
-          </p>
-        </GoldBar>
       </div>
       {chrome}
     </div>
   );
 
   const slide11 = (
+    <div className={styles.slide}>
+      <GeometricBg intensity="normal" />
+      <div className={styles.slideContent}>
+        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+          <div>
+            <span className={styles.goldPill}>VENDIMIATECH HACKATHON</span>
+            <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
+              Partners principales del track IA + Web3.
+            </h2>
+            <p style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font)', fontWeight: 800, color: 'var(--gold)', marginTop: '16px' }}>
+              +10 proyectos. 3 ganadores.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+              El 1er lugar ya conversa con nuestro equipo de IA y Agentes.
+            </p>
+          </div>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+            <img
+              src={PHOTO_VENDIMIA}
+              alt="Vendimia Hackathon"
+              loading="lazy"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </div>
+      {chrome}
+    </div>
+  );
+
+  const slide12 = (
+    <div className={styles.slide}>
+      <GeometricBg intensity="normal" />
+      <div className={styles.slideContent}>
+        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+          <div>
+            <span className={styles.goldPill}>BINANCE UNIVERSITY TOUR — UTN</span>
+            <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
+              Spreading the word en universidades de LatAm.
+            </h2>
+            <p style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font)', fontWeight: 800, color: 'var(--gold)', marginTop: '16px' }}>
+              +100 estudiantes.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+              La próxima generación de builders de la región.
+            </p>
+          </div>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+            <img
+              src={PHOTO_UTOUR}
+              alt="University Tour"
+              loading="lazy"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </div>
+      {chrome}
+    </div>
+  );
+
+  const slide13recursos = (
     <div className={styles.slide}>
       <GeometricBg intensity="low" />
       <div className={styles.slideContent}>
@@ -601,7 +676,7 @@ export default function BNBPresentation() {
             { icon: '🛠️', title: 'Remix IDE', desc: 'Escribí y deployá tu primer contrato hoy.', href: 'https://remix.ethereum.org' },
             { icon: '📄', title: 'Docs BNB Chain', desc: 'Documentación oficial completa.', href: 'https://docs.bnbchain.org' },
             { icon: '🚰', title: 'Testnet Faucet', desc: 'Gas gratis para practicar.', href: 'https://testnet.bnbchain.org/faucet-smart' },
-            { icon: '🏆', title: 'Programa MVB', desc: 'Incubación y funding para builders serios.', href: 'https://www.bnbchain.org/en/developers/developer-programs/most-valuable-builder' },
+            { icon: '🏆', title: 'Programa MVB', desc: 'Incubación y funding para builders serios.', href: 'https://www.bnbchain.org/en/programs/mvb' },
             { icon: '🎓', title: 'Solidity by Example', desc: 'Contratos reales explicados paso a paso.', href: 'https://solidity-by-example.org' },
           ].map((r, i) => (
             <a key={i} href={r.href} target="_blank" rel="noopener noreferrer" className={styles.resourceCard}>
@@ -616,7 +691,7 @@ export default function BNBPresentation() {
     </div>
   );
 
-  const slide12 = (
+  const slide14cta = (
     <div className={`${styles.slide} ${styles.ctaSlide}`}>
       <GeometricBg intensity="high" />
       <div className={styles.slideContent} style={{ alignItems: 'center', textAlign: 'center' }}>
@@ -680,7 +755,7 @@ export default function BNBPresentation() {
     </div>
   );
 
-  const slides = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11, slide12];
+  const slides = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10, slide11, slide12, slide13recursos, slide14cta];
 
   return (
     <div
