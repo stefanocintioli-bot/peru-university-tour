@@ -229,13 +229,13 @@ export default function BNBPresentation() {
         <div style={{ textAlign: 'center', width: '100%', marginBottom: '24px' }}>
           <div style={{ animation: 'symbolFloat 4s ease-in-out infinite', display: 'inline-block' }}>
             <img src={LOGO_YELLOW} alt="BNB Chain"
-              style={{ height: '96px', width: 'auto', display: 'block', animation: 'symbolGlow 3s ease-in-out infinite' }}
+              style={{ height: 'clamp(56px, 12vw, 96px)', width: 'auto', display: 'block', animation: 'symbolGlow 3s ease-in-out infinite' }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
           </div>
         </div>
 
         {/* Partner row */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: '28px', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: '28px', width: '100%', flexWrap: 'wrap', rowGap: '6px' }}>
           <span style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 12, color: '#fff', letterSpacing: '0.15em' }}>BNB CHAIN</span>
           <span style={{ color: '#444', fontSize: 12 }}> × </span>
           <span style={{ fontFamily: 'var(--font)', fontWeight: 500, fontSize: 12, color: '#fff' }}>Binance</span>
@@ -454,7 +454,7 @@ export default function BNBPresentation() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '16px', width: '100%' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', width: '100%' }}>
           {[
             {
               emoji: '🔗',
@@ -504,7 +504,7 @@ export default function BNBPresentation() {
           Ejemplos reales del LatAm Community Lead de BNB Chain
         </p>
 
-        <div className={styles.grid2x2}>
+        <div className={styles.grid2x2} style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
           {/* Card 1 */}
           <a href="https://bnb-dojo.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.card} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🎓</div>
@@ -662,7 +662,7 @@ export default function BNBPresentation() {
     <div className={styles.slide}>
       <GeometricBg intensity="normal" />
       <div className={styles.slideContent}>
-        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'var(--event-cols, 60% 40%)', gap: '40px', alignItems: 'center' }}>
           <div>
             <span className={styles.goldPill}>CRECIMIENTO POP UP</span>
             <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
@@ -675,7 +675,7 @@ export default function BNBPresentation() {
               5+ en conversaciones activas con nuestro equipo de BD.
             </p>
           </div>
-          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: 'var(--photo-h, 400px)' }}>
             <img
               src={PHOTO_CRECIMIENTO}
               alt="Crecimiento Workshop"
@@ -694,7 +694,7 @@ export default function BNBPresentation() {
     <div className={styles.slide}>
       <GeometricBg intensity="normal" />
       <div className={styles.slideContent}>
-        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'var(--event-cols, 60% 40%)', gap: '40px', alignItems: 'center' }}>
           <div>
             <span className={styles.goldPill}>VENDIMIATECH HACKATHON</span>
             <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
@@ -707,7 +707,7 @@ export default function BNBPresentation() {
               El 1er lugar ya conversa con nuestro equipo de IA y Agentes.
             </p>
           </div>
-          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: 'var(--photo-h, 400px)' }}>
             <img
               src={PHOTO_VENDIMIA}
               alt="Vendimia Hackathon"
@@ -726,7 +726,7 @@ export default function BNBPresentation() {
     <div className={styles.slide}>
       <GeometricBg intensity="normal" />
       <div className={styles.slideContent}>
-        <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '40px', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'var(--event-cols, 60% 40%)', gap: '40px', alignItems: 'center' }}>
           <div>
             <span className={styles.goldPill}>BINANCE UNIVERSITY TOUR — UTN</span>
             <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', marginTop: '16px', marginBottom: '16px', fontFamily: 'var(--font)', fontWeight: 700 }}>
@@ -739,7 +739,7 @@ export default function BNBPresentation() {
               La próxima generación de builders de la región.
             </p>
           </div>
-          <div style={{ borderRadius: '12px', overflow: 'hidden', height: '400px' }}>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', height: 'var(--photo-h, 400px)' }}>
             <img
               src={PHOTO_UTOUR}
               alt="University Tour"

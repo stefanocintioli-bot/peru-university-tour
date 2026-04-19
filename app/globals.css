@@ -11,6 +11,25 @@
   --card-bg: rgba(255,255,255,0.04);
   --card-border: rgba(255,255,255,0.08);
   --font: 'Space Grotesk', sans-serif;
+  --event-cols: 60% 40%;
+  --photo-h: 400px;
+  --logo-bottom: 24px;
+  --logo-left: 24px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --event-cols: 1fr;
+    --photo-h: 200px;
+    --logo-bottom: 16px;
+    --logo-left: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --photo-h: 160px;
+  }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

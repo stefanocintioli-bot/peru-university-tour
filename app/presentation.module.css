@@ -262,8 +262,8 @@
 /* Logo — BOTTOM-LEFT per brand-system.md */
 .logo {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
+  bottom: var(--logo-bottom, 24px);
+  left: var(--logo-left, 24px);
   z-index: 10;
 }
 
@@ -348,42 +348,83 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
+  .slide {
+    overflow-y: auto;
+  }
+
+  .slideContent {
+    padding: 52px 20px 80px;
+    height: auto;
+    justify-content: flex-start;
+  }
+
+  .coverSlide .slideContent {
+    padding-top: 80px;
+    padding-bottom: 100px;
+  }
+
+  .ctaSlide .slideContent {
+    padding-top: 80px;
+    padding-bottom: 100px;
+  }
+
   .grid2x2 {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .grid2x3 {
     grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .grid1x3 {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .grid1x2 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .tallCard {
+    padding: 16px;
+  }
+
+  .statCard {
+    padding: 16px;
+  }
+
+  .resourceCard {
+    padding: 16px;
   }
 
   .photoGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
     grid-template-areas:
-      'tl'
-      'tr'
-      'bl'
-      'br';
-    gap: 16px;
-    padding: 40px 20px;
+      'tl tr'
+      'bl br';
+    gap: 12px;
+    padding: 60px 16px 80px;
   }
 
   .photoWrapper {
     width: 100%;
-    height: 200px;
+    height: 130px;
   }
 
-  .slideContent {
-    padding: 40px 20px;
+  .collageContainer {
+    overflow-y: auto;
   }
 
   .watermark {
-    right: 100px;
-    font-size: 0.5rem;
+    display: none;
   }
 
   .slideCounter {
@@ -402,12 +443,16 @@
   }
 
   .slideContent {
-    padding: 24px 16px;
+    padding: 24px 16px 80px;
   }
 
-  .logo {
-    bottom: 16px;
-    left: 16px;
+  .photoWrapper {
+    height: 100px;
+  }
+
+  .goldPill {
+    font-size: 0.6rem;
+    padding: 4px 10px;
   }
 
   .watermark {
